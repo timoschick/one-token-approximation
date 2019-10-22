@@ -203,6 +203,9 @@ def main():
         embeddings = [[utils.get_word_embedding(wordpart, tokenizer, model, device) for wordpart in
                        tokenize_with_optional_space(wrd)] for wrd in batch]
 
+        print(len(embeddings[0]))
+        print([len(x) for x in embeddings])
+
         init_vals = initialize_embeddings(tokens, embeddings, args.init)
         optim_vars = torch.tensor(init_vals, requires_grad=True)
         optimizer = torch.optim.Adam([optim_vars], lr=args.learning_rate)
@@ -211,6 +214,9 @@ def main():
 
         if not uses_randomization:
             input_gold, input_inference, index_to_optimize = input_preparator.prepare_batch(batch)
+
+            print('IGS:', input_gold.tokens.shape, 'IIS', input_inference.tokens.shape)
+
             _, _, layers_gold = model(input_gold.tokens.to(device), input_gold.segments.to(device))
             layers_gold = [layer.detach() for layer in layers_gold]
 
