@@ -240,7 +240,7 @@ def main():
             model.embeddings.word_embeddings.overwrite_fct = None
 
             loss = nn.MSELoss()
-            loss_val = torch.tensor(0, dtype=torch.float)
+            loss_val = torch.tensor(0, dtype=torch.float).to(device)
 
             for idx in range(model.config.num_hidden_layers):
 
