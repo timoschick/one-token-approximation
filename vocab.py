@@ -49,7 +49,7 @@ def get_difference(vocab_path: str, model: str, model_cls: str) -> List[str]:
         model_vocab = tokenizer.vocab.keys()
     elif isinstance(tokenizer, GPT2Tokenizer):
         model_vocab = set(tokenizer.encoder.keys())
-        model_vocab.update(w[1:] for w in model_vocab if w.startswith('Ġ'))
+        model_vocab.update([w[1:] for w in model_vocab if w.startswith('Ġ')])
     else:
         raise ValueError('Access to vocab is currently only implemented for BertTokenizer and GPT2Tokenizer')
 
