@@ -1,0 +1,14 @@
+name: ota
+
+channels:
+  - pytorch
+  - defaults
+
+dependencies:
+  - python=3.7
+  - numpy
+  - pytorch
+  - torchvision
+  - scipy
+  - pip:
+      - transformers==2.1
