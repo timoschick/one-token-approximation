@@ -9,7 +9,6 @@ import numpy as np
 import torch
 import torch.nn as nn
 import scipy.spatial.distance
-from torch.autograd import Variable
 from transformers import BertModel, BertTokenizer, RobertaModel, RobertaTokenizer, GPT2Tokenizer
 
 import utils
