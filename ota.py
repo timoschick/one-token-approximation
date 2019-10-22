@@ -152,10 +152,15 @@ def main():
     for param in model.parameters():
         param.requires_grad = False
 
+    def tokenize_with_optional_space(word):
+        if isinstance(tokenizer, GPT2Tokenizer):
+            return tokenizer.tokenize(word, add_prefix_space=True)
+        return tokenizer.tokenize(word)
+
     # group words based on their number of tokens
     words_by_token_size = defaultdict(list)
     for word in words:
-        num_tokens = len(tokenizer.tokenize(word))
+        num_tokens = len(tokenize_with_optional_space(word))
         if num_tokens > 0:
             words_by_token_size[num_tokens].append(word)
 
@@ -193,11 +198,6 @@ def main():
             'Processing words {} - {} of {}'.format(batch_idx * args.batch_size + 1,
                                                     batch_idx * args.batch_size + len(batch),
                                                     len(words_for_token_size)))
-
-        def tokenize_with_optional_space(word):
-            if isinstance(tokenizer, GPT2Tokenizer):
-                return tokenizer.tokenize(word, add_prefix_space=True)
-            return tokenizer.tokenize(word)
 
         tokens = [tokenize_with_optional_space(wrd) for wrd in batch]
         embeddings = [[utils.get_word_embedding(wordpart, tokenizer, model, device) for wordpart in
