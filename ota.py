@@ -232,7 +232,8 @@ def main():
 
             if uses_randomization:
                 input_gold, input_inference, index_to_optimize = input_preparator.prepare_batch(batch)
-                _, _, layers_gold = model(input_gold.tokens.to(device), input_gold.segments.to(device))
+                with torch.no_grad():
+                    _, _, layers_gold = model(input_gold.tokens.to(device), input_gold.segments.to(device))
                 layers_gold = [layer.detach() for layer in layers_gold]
 
             model.embeddings.word_embeddings.overwrite_fct = overwrite_fct
